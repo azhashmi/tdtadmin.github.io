@@ -3,196 +3,1078 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Admin Dashboard</title>
+    <title>The Dime Technology - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0066cc;
+            --accent-orange: #ff6b35;
+            --dark-bg: #1a1a2e;
+            --light-bg: #f5f5f5;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --success-green: #27ae60;
+            --warning-yellow: #f39c12;
+            --danger-red: #e74c3c;
+            --border-color: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #004499 100%);
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-orange);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 15px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: rgba(255, 107, 53, 0.3);
+            border-left: 4px solid var(--accent-orange);
+            padding-left: 11px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 30px;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: var(--primary-blue);
+            font-size: 28px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 5px solid;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .stat-card.primary { border-left-color: var(--primary-blue); }
+        .stat-card.success { border-left-color: var(--success-green); }
+        .stat-card.warning { border-left-color: var(--warning-yellow); }
+        .stat-card.danger { border-left-color: var(--danger-red); }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: var(--success-green);
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0052a3;
+        }
+
+        .btn-orange {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .btn-orange:hover {
+            background: #e55a25;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        thead {
+            background: var(--light-bg);
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            color: var(--text-dark);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tbody tr:hover {
+            background: var(--light-bg);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: var(--success-green);
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: var(--warning-yellow);
+        }
+
+        .status-completed {
+            background: #cfe2ff;
+            color: var(--primary-blue);
+        }
+
+        .progress-bar {
+            background: var(--light-bg);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-orange));
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .team-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .team-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-orange));
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .team-name {
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            color: var(--text-light);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 180px;
+            }
+            .main-content {
+                margin-left: 180px;
+                padding: 15px;
+
+        /* MODAL STYLES */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: var(--text-dark);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: var(--danger-red);
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-form .form-group {
+    margin-bottom: 20px;
+}
+
+.modal-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.modal-form select {
+    cursor: pointer;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.btn-cancel {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background: #7f8c8d;
+}
+
+.btn-add {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.btn-add:hover {
+    background: #0052a3;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Admin Dashboard</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">Clients</a></li>
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Earnings</a></li>
-                <li><a href="#">Tasks</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Settings</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="dashboard">
-            <h2>Dashboard Overview</h2>
-            <!-- Dashboard content here -->
-        </section>
-        <section id="projects">
-            <h2>Projects</h2>
-            <button onclick="openModal('newProjectModal')">New Project</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Project rows here -->
-                </tbody>
-            </table>
-        </section>
-        <section id="clients">
-            <h2>Clients</h2>
-            <button onclick="openModal('addClientModal')">Add Client</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Client Name</th>
-                        <th>Contact</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Client rows here -->
-                </tbody>
-            </table>
-        </section>
-        <section id="team">
-            <h2>Team Members</h2>
-            <button onclick="openModal('addMemberModal')">Add Member</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Member Name</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Team member rows here -->
-                </tbody>
-            </table>
-        </section>
-        <section id="tasks">
-            <h2>Tasks</h2>
-            <button onclick="openModal('newTaskModal')">New Task</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Task Name</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Task rows here -->
-                </tbody>
-            </table>
-        </section>
-        <section id="reports">
-            <h2>Reports</h2>
-            <button onclick="openModal('generateReportModal')">Generate Report</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Report Name</th>
-                        <th>Date Created</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Report rows here -->
-                </tbody>
-            </table>
-        </section>
-        <section id="settings">
-            <h2>Settings</h2>
-            <!-- Settings content here -->
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Admin Dashboard</p>
-    </footer>
-    <div id="newProjectModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('newProjectModal')">&times;</span>
-            <h3>New Project</h3>
-            <form>
-                <label for="projectName">Project Name:</label>
-                <input type="text" id="projectName" name="projectName" required>
-                <div class="modal-buttons">
-                    <button type="button" onclick="closeModal('newProjectModal')">Cancel</button>
-                    <button type="submit">Add</button>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🕐</div>
+                <span>The Dime</span>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a class="nav-link active" onclick="showSection('dashboard')"><span>📊</span> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('projects')"><span>📋</span> Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('clients')"><span>👥</span> Clients</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('team')"><span>👨‍💼</span> Team</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('earnings')"><span>💰</span> Earnings</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('tasks')"><span>✓</span> Tasks</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('reports')"><span>📈</span> Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('settings')"><span>⚙️</span> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <!-- DASHBOARD SECTION -->
+            <div id="dashboard" class="content-section active">
+                <div class="header">
+                    <h1>Dashboard</h1>
+                    <div class="user-profile">
+                        <div><div style="font-weight: 600;">Admin</div><div style="font-size: 12px; color: var(--text-light);">Administrator</div></div>
+                        <div class="avatar">A</div>
+                    </div>
                 </div>
-            </form>
+
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-label">Active Projects</div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-change">↑ 3 this month</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">Completed Projects</div>
+                        <div class="stat-value">28</div>
+                        <div class="stat-change">↑ 5 this month</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">Total Clients</div>
+                        <div class="stat-value">15</div>
+                        <div class="stat-change">↑ 2 new clients</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-label">Monthly Earnings</div>
+                        <div class="stat-value">$24.5K</div>
+                        <div class="stat-change">↑ 12% from last month</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">
+                        <span>Recent Projects</span>
+                        <button class="btn btn-primary btn-small">+ New Project</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr><th>Project Name</th><th>Client</th><th>Progress</th><th>Status</th><th>Deadline</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>E-Commerce Platform</strong></td>
+                                <td>TechStart Inc</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>75%</td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-04-15</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mobile App Development</strong></td>
+                                <td>FinanceHub Ltd</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 45%"></div></div>45%</td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-05-20</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PROJECTS SECTION -->
+            <div id="projects" class="content-section">
+                <div class="header">
+                    <h1>Projects</h1>
+                    <button class="btn btn-primary">+ New Project</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-label">Total Projects</div>
+                        <div class="stat-value">40</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">Completed</div>
+                        <div class="stat-value">28</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">In Progress</div>
+                        <div class="stat-value">12</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>All Projects</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Project Name</th><th>Client</th><th>Status</th><th>Start Date</th><th>End Date</th><th>Budget</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>E-Commerce Platform</strong></td>
+                                <td>TechStart Inc</td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-02-01</td>
+                                <td>2026-04-15</td>
+                                <td>$15,000</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mobile App Development</strong></td>
+                                <td>FinanceHub Ltd</td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-01-15</td>
+                                <td>2026-05-20</td>
+                                <td>$22,000</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Website Redesign</strong></td>
+                                <td>StyleBox Co</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>2025-12-01</td>
+                                <td>2026-03-10</td>
+                                <td>$8,500</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CLIENTS SECTION -->
+            <div id="clients" class="content-section">
+                <div class="header">
+                    <h1>Clients</h1>
+                    <button class="btn btn-primary">+ Add Client</button>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Client Management</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Company Name</th><th>Contact Person</th><th>Email</th><th>Phone</th><th>Status</th><th>Projects</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>TechStart Inc</strong></td>
+                                <td>John Smith</td>
+                                <td>john@techstart.com</td>
+                                <td>+1 (555) 123-4567</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>3</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>FinanceHub Ltd</strong></td>
+                                <td>Sarah Johnson</td>
+                                <td>sarah@financehub.com</td>
+                                <td>+1 (555) 234-5678</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>2</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>StyleBox Co</strong></td>
+                                <td>Michael Brown</td>
+                                <td>michael@stylebox.com</td>
+                                <td>+1 (555) 345-6789</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>4</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TEAM SECTION -->
+            <div id="team" class="content-section">
+                <div class="header">
+                    <h1>Team Members</h1>
+                    <button class="btn btn-primary">+ Add Member</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-label">Total Team</div>
+                        <div class="stat-value">18</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">Active</div>
+                        <div class="stat-value">18</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Team Grid</span></div>
+                    <div class="team-grid">
+                        <div class="team-card"><div class="team-avatar">JD</div><div class="team-name">John Doe</div><div class="team-role">Lead Developer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">SM</div><div class="team-name">Sarah Miller</div><div class="team-role">UI/UX Designer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">MJ</div><div class="team-name">Mike Johnson</div><div class="team-role">Backend Developer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">EA</div><div class="team-name">Emma Anderson</div><div class="team-role">Project Manager</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">DB</div><div class="team-name">David Brown</div><div class="team-role">QA Engineer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">LC</div><div class="team-name">Lisa Chen</div><div class="team-role">DevOps Engineer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EARNINGS SECTION -->
+            <div id="earnings" class="content-section">
+                <div class="header">
+                    <h1>Earnings</h1>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card danger">
+                        <div class="stat-label">Total Earnings</div>
+                        <div class="stat-value">$215.8K</div>
+                        <div class="stat-change">↑ 8% YoY</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">This Month</div>
+                        <div class="stat-value">$24.5K</div>
+                        <div class="stat-change">↑ 12% MoM</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">Pending</div>
+                        <div class="stat-value">$7.2K</div>
+                        <div class="stat-change">3 invoices</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Monthly Earnings Breakdown</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Project</th><th>Client</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>E-Commerce Platform</strong></td>
+                                <td>TechStart Inc</td>
+                                <td><strong style="color: var(--success-green);">$8,500</strong></td>
+                                <td><span class="status-badge status-active">Paid</span></td>
+                                <td>2026-03-15</td>
+                                <td><button class="btn btn-orange btn-small">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mobile App Development</strong></td>
+                                <td>FinanceHub Ltd</td>
+                                <td><strong style="color: var(--warning-yellow);">$7,200</strong></td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>2026-03-20</td>
+                                <td><button class="btn btn-orange btn-small">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Website Redesign</strong></td>
+                                <td>StyleBox Co</td>
+                                <td><strong style="color: var(--success-green);">$8,800</strong></td>
+                                <td><span class="status-badge status-active">Paid</span></td>
+                                <td>2026-03-10</td>
+                                <td><button class="btn btn-orange btn-small">Details</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TASKS SECTION -->
+            <div id="tasks" class="content-section">
+                <div class="header">
+                    <h1>Tasks</h1>
+                    <button class="btn btn-primary">+ New Task</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-label">Total Tasks</div>
+                        <div class="stat-value">48</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">Completed</div>
+                        <div class="stat-value">32</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">In Progress</div>
+                        <div class="stat-value">12</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-label">Overdue</div>
+                        <div class="stat-value">4</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Task List</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Task Name</th><th>Project</th><th>Assigned To</th><th>Priority</th><th>Status</th><th>Due Date</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Database Design</strong></td>
+                                <td>E-Commerce Platform</td>
+                                <td>Mike Johnson</td>
+                                <td><span class="status-badge status-active">High</span></td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>2026-03-01</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>API Integration</strong></td>
+                                <td>Mobile App Development</td>
+                                <td>John Doe</td>
+                                <td><span class="status-badge status-active">High</span></td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-03-25</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>UI Testing</strong></td>
+                                <td>Website Redesign</td>
+                                <td>Sarah Miller</td>
+                                <td><span class="status-badge status-pending">Medium</span></td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>2026-03-05</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- REPORTS SECTION -->
+            <div id="reports" class="content-section">
+                <div class="header">
+                    <h1>Reports</h1>
+                    <button class="btn btn-primary">+ Generate Report</button>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Performance Metrics</span></div>
+                    <div class="grid-2">
+                        <div>
+                            <h3 style="margin-bottom: 15px; color: var(--primary-blue);">Project Completion Rate</h3>
+                            <div class="progress-bar" style="height: 20px; margin-bottom: 10px;"><div class="progress-fill" style="width: 70%"></div></div>
+                            <p style="font-size: 14px;">70% of projects completed on time</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 15px; color: var(--primary-blue);">Client Satisfaction</h3>
+                            <div class="progress-bar" style="height: 20px; margin-bottom: 10px;"><div class="progress-fill" style="width: 92%"></div></div>
+                            <p style="font-size: 14px;">92% average satisfaction score</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 15px; color: var(--primary-blue);">Team Productivity</h3>
+                            <div class="progress-bar" style="height: 20px; margin-bottom: 10px;"><div class="progress-fill" style="width: 85%"></div></div>
+                            <p style="font-size: 14px;">85% tasks completed within deadline</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 15px; color: var(--primary-blue);">Budget Efficiency</h3>
+                            <div class="progress-bar" style="height: 20px; margin-bottom: 10px;"><div class="progress-fill" style="width: 78%"></div></div>
+                            <p style="font-size: 14px;">78% within budget allocation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Recent Reports</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Report Name</th><th>Type</th><th>Generated By</th><th>Date</th><th>Status</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Monthly Performance Report</strong></td>
+                                <td>Performance</td>
+                                <td>Admin</td>
+                                <td>2026-03-20</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td><button class="btn btn-orange btn-small">Download</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Financial Summary Q1</strong></td>
+                                <td>Financial</td>
+                                <td>Admin</td>
+                                <td>2026-03-15</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td><button class="btn btn-orange btn-small">Download</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SETTINGS SECTION -->
+            <div id="settings" class="content-section">
+                <div class="header">
+                    <h1>Settings</h1>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>General Settings</span></div>
+                    <div class="grid-2">
+                        <div>
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <input type="text" value="The Dime Technology" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" value="admin@thedime.com" />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" value="+1 (555) 123-4567" />
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" value="123 Business St, City, State 12345" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Notification Settings</span></div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" checked /> Email notifications for new projects
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" checked /> SMS alerts for urgent tasks
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" /> Daily summary reports
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" checked /> Payment notifications
+                        </label>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Security Settings</span></div>
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" placeholder="Enter current password" />
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" placeholder="Enter new password" />
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" placeholder="Confirm new password" />
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Update Password</button>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Danger Zone</span></div>
+                    <button class="btn" style="background: var(--danger-red); color: white;">Delete Account</button>
+                </div>
+            </div>
+            
+<!-- NEW PROJECT MODAL WITH CONFIRMATION -->
+<div id="newProjectModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeNewProjectModal()">&times;</span>
+        <h2>Add New Project</h2>
+        <form class="modal-form" id="projectForm">
+            <div class="form-group">
+                <label for="projectName">Project Name *</label>
+                <input type="text" id="projectName" placeholder="Enter project name" required />
+            </div>
+            <div class="form-group">
+                <label for="projectClient">Client *</label>
+                <select id="projectClient" required>
+                    <option value="">Select a client</option>
+                    <option value="TechStart Inc">TechStart Inc</option>
+                    <option value="FinanceHub Ltd">FinanceHub Ltd</option>
+                    <option value="StyleBox Co">StyleBox Co</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="projectBudget">Budget ($) *</label>
+                <input type="number" id="projectBudget" placeholder="Enter budget" min="0" required />
+            </div>
+            <div class="form-group">
+                <label for="projectDeadline">Deadline *</label>
+                <input type="date" id="projectDeadline" required />
+            </div>
+            <div class="form-group">
+                <label for="projectDescription">Description</label>
+                <textarea id="projectDescription" placeholder="Enter project description"></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="btn btn-cancel" onclick="closeNewProjectModal()">Cancel</button>
+                <button type="button" class="btn btn-add" onclick="confirmAddProject()">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <h2>Confirm</h2>
+        <p id="confirmMessage">Are you sure you want to add this project?</p>
+        <div class="modal-buttons">
+            <button type="button" class="btn btn-cancel" onclick="closeConfirmationModal()">No</button>
+            <button type="button" class="btn btn-add" onclick="finalizeAddProject()">Yes</button>
         </div>
     </div>
-    <div id="addClientModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('addClientModal')">&times;</span>
-            <h3>Add Client</h3>
-            <form>
-                <label for="clientName">Client Name:</label>
-                <input type="text" id="clientName" name="clientName" required>
-                <div class="modal-buttons">
-                    <button type="button" onclick="closeModal('addClientModal')">Cancel</button>
-                    <button type="submit">Add</button>
-                </div>
-            </form>
-        </div>
+</div>
+            
+        </main>
     </div>
-    <div id="addMemberModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('addMemberModal')">&times;</span>
-            <h3>Add Member</h3>
-            <form>
-                <label for="memberName">Member Name:</label>
-                <input type="text" id="memberName" name="memberName" required>
-                <div class="modal-buttons">
-                    <button type="button" onclick="closeModal('addMemberModal')">Cancel</button>
-                    <button type="submit">Add</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div id="newTaskModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('newTaskModal')">&times;</span>
-            <h3>New Task</h3>
-            <form>
-                <label for="taskName">Task Name:</label>
-                <input type="text" id="taskName" name="taskName" required>
-                <div class="modal-buttons">
-                    <button type="button" onclick="closeModal('newTaskModal')">Cancel</button>
-                    <button type="submit">Add</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div id="generateReportModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('generateReportModal')">&times;</span>
-            <h3>Generate Report</h3>
-            <form>
-                <label for="reportName">Report Name:</label>
-                <input type="text" id="reportName" name="reportName" required>
-                <div class="modal-buttons">
-                    <button type="button" onclick="closeModal('generateReportModal')">Cancel</button>
-                    <button type="submit">Generate</button>
-                </div>
-            </form>
-        </div>
-    </div>
+
     <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to corresponding nav link
+            event.target.closest('.nav-link').classList.add('active');
         }
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-        // More JavaScript to handle form submissions and interactions
     </script>
 </body>
 </html>
