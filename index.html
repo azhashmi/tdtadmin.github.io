@@ -3,70 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Modals</title>
     <link rel="stylesheet" href="styles.css">
+    <title>Admin Dashboard</title>
 </head>
 <body>
-    <div class="modal" id="newProjectModal">
+    <header>
+        <h1>Admin Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Clients</a></li>
+                <li><a href="#">Team</a></li>
+                <li><a href="#">Earnings</a></li>
+                <li><a href="#">Tasks</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="dashboard">
+            <h2>Dashboard Overview</h2>
+            <!-- Dashboard content here -->
+        </section>
+        <section id="projects">
+            <h2>Projects</h2>
+            <button onclick="openModal('newProjectModal')">New Project</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Project rows here -->
+                </tbody>
+            </table>
+        </section>
+        <section id="clients">
+            <h2>Clients</h2>
+            <button onclick="openModal('addClientModal')">Add Client</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Client rows here -->
+                </tbody>
+            </table>
+        </section>
+        <section id="team">
+            <h2>Team Members</h2>
+            <button onclick="openModal('addMemberModal')">Add Member</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Member Name</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Team member rows here -->
+                </tbody>
+            </table>
+        </section>
+        <section id="tasks">
+            <h2>Tasks</h2>
+            <button onclick="openModal('newTaskModal')">New Task</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Task rows here -->
+                </tbody>
+            </table>
+        </section>
+        <section id="reports">
+            <h2>Reports</h2>
+            <button onclick="openModal('generateReportModal')">Generate Report</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Report Name</th>
+                        <th>Date Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Report rows here -->
+                </tbody>
+            </table>
+        </section>
+        <section id="settings">
+            <h2>Settings</h2>
+            <!-- Settings content here -->
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Admin Dashboard</p>
+    </footer>
+    <div id="newProjectModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('newProjectModal')">&times;</span>
-            <h2>New Project</h2>
+            <h3>New Project</h3>
             <form>
-                <input type="text" placeholder="Project Name" required>
-                <button type="button" onclick="closeModal('newProjectModal')">Cancel</button>
-                <button type="submit">Add</button>
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" name="projectName" required>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeModal('newProjectModal')">Cancel</button>
+                    <button type="submit">Add</button>
+                </div>
             </form>
         </div>
     </div>
-
-    <div class="modal" id="addClientModal">
+    <div id="addClientModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('addClientModal')">&times;</span>
-            <h2>Add Client</h2>
+            <h3>Add Client</h3>
             <form>
-                <input type="text" placeholder="Client Name" required>
-                <button type="button" onclick="closeModal('addClientModal')">Cancel</button>
-                <button type="submit">Add</button>
+                <label for="clientName">Client Name:</label>
+                <input type="text" id="clientName" name="clientName" required>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeModal('addClientModal')">Cancel</button>
+                    <button type="submit">Add</button>
+                </div>
             </form>
         </div>
     </div>
-
-    <div class="modal" id="addMemberModal">
+    <div id="addMemberModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('addMemberModal')">&times;</span>
-            <h2>Add Member</h2>
+            <h3>Add Member</h3>
             <form>
-                <input type="text" placeholder="Member Name" required>
-                <button type="button" onclick="closeModal('addMemberModal')">Cancel</button>
-                <button type="submit">Add</button>
+                <label for="memberName">Member Name:</label>
+                <input type="text" id="memberName" name="memberName" required>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeModal('addMemberModal')">Cancel</button>
+                    <button type="submit">Add</button>
+                </div>
             </form>
         </div>
     </div>
-
-    <div class="modal" id="newTaskModal">
+    <div id="newTaskModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('newTaskModal')">&times;</span>
-            <h2>New Task</h2>
+            <h3>New Task</h3>
             <form>
-                <input type="text" placeholder="Task Name" required>
-                <button type="button" onclick="closeModal('newTaskModal')">Cancel</button>
-                <button type="submit">Add</button>
+                <label for="taskName">Task Name:</label>
+                <input type="text" id="taskName" name="taskName" required>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeModal('newTaskModal')">Cancel</button>
+                    <button type="submit">Add</button>
+                </div>
             </form>
         </div>
     </div>
-
-    <div class="modal" id="generateReportModal">
+    <div id="generateReportModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('generateReportModal')">&times;</span>
-            <h2>Generate Report</h2>
+            <h3>Generate Report</h3>
             <form>
-                <input type="text" placeholder="Report Name" required>
-                <button type="button" onclick="closeModal('generateReportModal')">Cancel</button>
-                <button type="submit">Generate</button>
+                <label for="reportName">Report Name:</label>
+                <input type="text" id="reportName" name="reportName" required>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeModal('generateReportModal')">Cancel</button>
+                    <button type="submit">Generate</button>
+                </div>
             </form>
         </div>
     </div>
-
     <script>
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
@@ -74,6 +192,7 @@
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
+        // More JavaScript to handle form submissions and interactions
     </script>
 </body>
 </html>
