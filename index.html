@@ -407,6 +407,113 @@
             .main-content {
                 margin-left: 180px;
                 padding: 15px;
+
+        /* MODAL STYLES */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: var(--text-dark);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: var(--danger-red);
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-form .form-group {
+    margin-bottom: 20px;
+}
+
+.modal-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.modal-form select {
+    cursor: pointer;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.btn-cancel {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background: #7f8c8d;
+}
+
+.btn-add {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.btn-add:hover {
+    background: #0052a3;
             }
         }
     </style>
@@ -895,6 +1002,58 @@
                     <button class="btn" style="background: var(--danger-red); color: white;">Delete Account</button>
                 </div>
             </div>
+            
+<!-- NEW PROJECT MODAL WITH CONFIRMATION -->
+<div id="newProjectModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeNewProjectModal()">&times;</span>
+        <h2>Add New Project</h2>
+        <form class="modal-form" id="projectForm">
+            <div class="form-group">
+                <label for="projectName">Project Name *</label>
+                <input type="text" id="projectName" placeholder="Enter project name" required />
+            </div>
+            <div class="form-group">
+                <label for="projectClient">Client *</label>
+                <select id="projectClient" required>
+                    <option value="">Select a client</option>
+                    <option value="TechStart Inc">TechStart Inc</option>
+                    <option value="FinanceHub Ltd">FinanceHub Ltd</option>
+                    <option value="StyleBox Co">StyleBox Co</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="projectBudget">Budget ($) *</label>
+                <input type="number" id="projectBudget" placeholder="Enter budget" min="0" required />
+            </div>
+            <div class="form-group">
+                <label for="projectDeadline">Deadline *</label>
+                <input type="date" id="projectDeadline" required />
+            </div>
+            <div class="form-group">
+                <label for="projectDescription">Description</label>
+                <textarea id="projectDescription" placeholder="Enter project description"></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="btn btn-cancel" onclick="closeNewProjectModal()">Cancel</button>
+                <button type="button" class="btn btn-add" onclick="confirmAddProject()">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <h2>Confirm</h2>
+        <p id="confirmMessage">Are you sure you want to add this project?</p>
+        <div class="modal-buttons">
+            <button type="button" class="btn btn-cancel" onclick="closeConfirmationModal()">No</button>
+            <button type="button" class="btn btn-add" onclick="finalizeAddProject()">Yes</button>
+        </div>
+    </div>
+</div>
+            
         </main>
     </div>
 
