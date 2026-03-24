@@ -45,6 +45,7 @@
             height: 100vh;
             overflow-y: auto;
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 100;
         }
 
         .logo {
@@ -84,6 +85,7 @@
             padding: 12px 15px;
             border-radius: 8px;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .nav-link:hover,
@@ -97,6 +99,14 @@
             margin-left: 250px;
             flex: 1;
             padding: 30px;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
         }
 
         .header {
@@ -154,21 +164,10 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
 
-        .stat-card.primary {
-            border-left-color: var(--primary-blue);
-        }
-
-        .stat-card.success {
-            border-left-color: var(--success-green);
-        }
-
-        .stat-card.warning {
-            border-left-color: var(--warning-yellow);
-        }
-
-        .stat-card.danger {
-            border-left-color: var(--danger-red);
-        }
+        .stat-card.primary { border-left-color: var(--primary-blue); }
+        .stat-card.success { border-left-color: var(--success-green); }
+        .stat-card.warning { border-left-color: var(--warning-yellow); }
+        .stat-card.danger { border-left-color: var(--danger-red); }
 
         .stat-label {
             color: var(--text-light);
@@ -356,6 +355,31 @@
             margin-bottom: 10px;
         }
 
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px;
@@ -369,6 +393,9 @@
                 gap: 15px;
             }
             .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .grid-2 {
                 grid-template-columns: 1fr;
             }
         }
@@ -393,113 +420,502 @@
             </div>
             <nav>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="#dashboard" class="nav-link active"><span>📊</span> Dashboard</a></li>
-                    <li class="nav-item"><a href="#projects" class="nav-link"><span>📋</span> Projects</a></li>
-                    <li class="nav-item"><a href="#clients" class="nav-link"><span>👥</span> Clients</a></li>
-                    <li class="nav-item"><a href="#team" class="nav-link"><span>👨‍💼</span> Team</a></li>
-                    <li class="nav-item"><a href="#earnings" class="nav-link"><span>💰</span> Earnings</a></li>
-                    <li class="nav-item"><a href="#tasks" class="nav-link"><span>✓</span> Tasks</a></li>
-                    <li class="nav-item"><a href="#reports" class="nav-link"><span>📈</span> Reports</a></li>
-                    <li class="nav-item"><a href="#settings" class="nav-link"><span>⚙️</span> Settings</a></li>
+                    <li class="nav-item"><a class="nav-link active" onclick="showSection('dashboard')"><span>📊</span> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('projects')"><span>📋</span> Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('clients')"><span>👥</span> Clients</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('team')"><span>👨‍💼</span> Team</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('earnings')"><span>💰</span> Earnings</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('tasks')"><span>✓</span> Tasks</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('reports')"><span>📈</span> Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showSection('settings')"><span>⚙️</span> Settings</a></li>
                 </ul>
             </nav>
         </aside>
 
         <main class="main-content">
-            <div class="header">
-                <h1>Dashboard</h1>
-                <div class="user-profile">
-                    <div><div style="font-weight: 600;">Admin</div><div style="font-size: 12px; color: var(--text-light);">Administrator</div></div>
-                    <div class="avatar">A</div>
+            <!-- DASHBOARD SECTION -->
+            <div id="dashboard" class="content-section active">
+                <div class="header">
+                    <h1>Dashboard</h1>
+                    <div class="user-profile">
+                        <div><div style="font-weight: 600;">Admin</div><div style="font-size: 12px; color: var(--text-light);">Administrator</div></div>
+                        <div class="avatar">A</div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-label">Active Projects</div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-change">↑ 3 this month</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">Completed Projects</div>
+                        <div class="stat-value">28</div>
+                        <div class="stat-change">↑ 5 this month</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">Total Clients</div>
+                        <div class="stat-value">15</div>
+                        <div class="stat-change">↑ 2 new clients</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-label">Monthly Earnings</div>
+                        <div class="stat-value">$24.5K</div>
+                        <div class="stat-change">↑ 12% from last month</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">
+                        <span>Recent Projects</span>
+                        <button class="btn btn-primary btn-small">+ New Project</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr><th>Project Name</th><th>Client</th><th>Progress</th><th>Status</th><th>Deadline</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>E-Commerce Platform</strong></td>
+                                <td>TechStart Inc</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>75%</td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-04-15</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mobile App Development</strong></td>
+                                <td>FinanceHub Ltd</td>
+                                <td><div class="progress-bar"><div class="progress-fill" style="width: 45%"></div></div>45%</td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-05-20</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="stats-grid">
-                <div class="stat-card primary">
-                    <div class="stat-label">Active Projects</div>
-                    <div class="stat-value">12</div>
-                    <div class="stat-change">↑ 3 this month</div>
+            <!-- PROJECTS SECTION -->
+            <div id="projects" class="content-section">
+                <div class="header">
+                    <h1>Projects</h1>
+                    <button class="btn btn-primary">+ New Project</button>
                 </div>
-                <div class="stat-card success">
-                    <div class="stat-label">Completed Projects</div>
-                    <div class="stat-value">28</div>
-                    <div class="stat-change">↑ 5 this month</div>
+
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-label">Total Projects</div>
+                        <div class="stat-value">40</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">Completed</div>
+                        <div class="stat-value">28</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">In Progress</div>
+                        <div class="stat-value">12</div>
+                    </div>
                 </div>
-                <div class="stat-card warning">
-                    <div class="stat-label">Total Clients</div>
-                    <div class="stat-value">15</div>
-                    <div class="stat-change">↑ 2 new clients</div>
-                </div>
-                <div class="stat-card danger">
-                    <div class="stat-label">Monthly Earnings</div>
-                    <div class="stat-value">$24.5K</div>
-                    <div class="stat-change">↑ 12% from last month</div>
+
+                <div class="section">
+                    <div class="section-title"><span>All Projects</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Project Name</th><th>Client</th><th>Status</th><th>Start Date</th><th>End Date</th><th>Budget</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>E-Commerce Platform</strong></td>
+                                <td>TechStart Inc</td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-02-01</td>
+                                <td>2026-04-15</td>
+                                <td>$15,000</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mobile App Development</strong></td>
+                                <td>FinanceHub Ltd</td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-01-15</td>
+                                <td>2026-05-20</td>
+                                <td>$22,000</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Website Redesign</strong></td>
+                                <td>StyleBox Co</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>2025-12-01</td>
+                                <td>2026-03-10</td>
+                                <td>$8,500</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="section">
-                <div class="section-title">
-                    <span>Recent Projects</span>
-                    <button class="btn btn-primary btn-small">+ New Project</button>
+            <!-- CLIENTS SECTION -->
+            <div id="clients" class="content-section">
+                <div class="header">
+                    <h1>Clients</h1>
+                    <button class="btn btn-primary">+ Add Client</button>
                 </div>
-                <table>
-                    <thead>
-                        <tr><th>Project Name</th><th>Client</th><th>Progress</th><th>Status</th><th>Deadline</th><th>Action</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>E-Commerce Platform</strong></td>
-                            <td>TechStart Inc</td>
-                            <td><div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>75%</td>
-                            <td><span class="status-badge status-active">In Progress</span></td>
-                            <td>2026-04-15</td>
-                            <td><button class="btn btn-orange btn-small">View</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Mobile App Development</strong></td>
-                            <td>FinanceHub Ltd</td>
-                            <td><div class="progress-bar"><div class="progress-fill" style="width: 45%"></div></div>45%</td>
-                            <td><span class="status-badge status-active">In Progress</span></td>
-                            <td>2026-05-20</td>
-                            <td><button class="btn btn-orange btn-small">View</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Website Redesign</strong></td>
-                            <td>StyleBox Co</td>
-                            <td><div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>100%</td>
-                            <td><span class="status-badge status-completed">Completed</span></td>
-                            <td>2026-03-10</td>
-                            <td><button class="btn btn-orange btn-small">View</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
 
-            <div class="section">
-                <div class="section-title">
-                    <span>Team Members</span>
-                    <button class="btn btn-primary btn-small">+ Add Member</button>
-                </div>
-                <div class="team-grid">
-                    <div class="team-card"><div class="team-avatar">JD</div><div class="team-name">John Doe</div><div class="team-role">Lead Developer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
-                    <div class="team-card"><div class="team-avatar">SM</div><div class="team-name">Sarah Miller</div><div class="team-role">UI/UX Designer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
-                    <div class="team-card"><div class="team-avatar">MJ</div><div class="team-name">Mike Johnson</div><div class="team-role">Backend Developer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                <div class="section">
+                    <div class="section-title"><span>Client Management</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Company Name</th><th>Contact Person</th><th>Email</th><th>Phone</th><th>Status</th><th>Projects</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>TechStart Inc</strong></td>
+                                <td>John Smith</td>
+                                <td>john@techstart.com</td>
+                                <td>+1 (555) 123-4567</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>3</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>FinanceHub Ltd</strong></td>
+                                <td>Sarah Johnson</td>
+                                <td>sarah@financehub.com</td>
+                                <td>+1 (555) 234-5678</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>2</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>StyleBox Co</strong></td>
+                                <td>Michael Brown</td>
+                                <td>michael@stylebox.com</td>
+                                <td>+1 (555) 345-6789</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>4</td>
+                                <td><button class="btn btn-orange btn-small">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="section">
-                <div class="section-title"><span>Monthly Earnings Breakdown</span></div>
-                <table>
-                    <thead>
-                        <tr><th>Project</th><th>Client</th><th>Amount</th><th>Status</th><th>Date</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>E-Commerce Platform</td><td>TechStart Inc</td><td><strong style="color: var(--success-green);">$8,500</strong></td><td><span class="status-badge status-active">Paid</span></td><td>2026-03-15</td></tr>
-                        <tr><td>Mobile App Development</td><td>FinanceHub Ltd</td><td><strong style="color: var(--warning-yellow);">$7,200</strong></td><td><span class="status-badge status-pending">Pending</span></td><td>2026-03-20</td></tr>
-                    </tbody>
-                </table>
+            <!-- TEAM SECTION -->
+            <div id="team" class="content-section">
+                <div class="header">
+                    <h1>Team Members</h1>
+                    <button class="btn btn-primary">+ Add Member</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-label">Total Team</div>
+                        <div class="stat-value">18</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">Active</div>
+                        <div class="stat-value">18</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Team Grid</span></div>
+                    <div class="team-grid">
+                        <div class="team-card"><div class="team-avatar">JD</div><div class="team-name">John Doe</div><div class="team-role">Lead Developer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">SM</div><div class="team-name">Sarah Miller</div><div class="team-role">UI/UX Designer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">MJ</div><div class="team-name">Mike Johnson</div><div class="team-role">Backend Developer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">EA</div><div class="team-name">Emma Anderson</div><div class="team-role">Project Manager</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">DB</div><div class="team-name">David Brown</div><div class="team-role">QA Engineer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                        <div class="team-card"><div class="team-avatar">LC</div><div class="team-name">Lisa Chen</div><div class="team-role">DevOps Engineer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EARNINGS SECTION -->
+            <div id="earnings" class="content-section">
+                <div class="header">
+                    <h1>Earnings</h1>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card danger">
+                        <div class="stat-label">Total Earnings</div>
+                        <div class="stat-value">$215.8K</div>
+                        <div class="stat-change">↑ 8% YoY</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">This Month</div>
+                        <div class="stat-value">$24.5K</div>
+                        <div class="stat-change">↑ 12% MoM</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">Pending</div>
+                        <div class="stat-value">$7.2K</div>
+                        <div class="stat-change">3 invoices</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Monthly Earnings Breakdown</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Project</th><th>Client</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>E-Commerce Platform</strong></td>
+                                <td>TechStart Inc</td>
+                                <td><strong style="color: var(--success-green);">$8,500</strong></td>
+                                <td><span class="status-badge status-active">Paid</span></td>
+                                <td>2026-03-15</td>
+                                <td><button class="btn btn-orange btn-small">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mobile App Development</strong></td>
+                                <td>FinanceHub Ltd</td>
+                                <td><strong style="color: var(--warning-yellow);">$7,200</strong></td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>2026-03-20</td>
+                                <td><button class="btn btn-orange btn-small">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Website Redesign</strong></td>
+                                <td>StyleBox Co</td>
+                                <td><strong style="color: var(--success-green);">$8,800</strong></td>
+                                <td><span class="status-badge status-active">Paid</span></td>
+                                <td>2026-03-10</td>
+                                <td><button class="btn btn-orange btn-small">Details</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TASKS SECTION -->
+            <div id="tasks" class="content-section">
+                <div class="header">
+                    <h1>Tasks</h1>
+                    <button class="btn btn-primary">+ New Task</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-label">Total Tasks</div>
+                        <div class="stat-value">48</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">Completed</div>
+                        <div class="stat-value">32</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">In Progress</div>
+                        <div class="stat-value">12</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-label">Overdue</div>
+                        <div class="stat-value">4</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Task List</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Task Name</th><th>Project</th><th>Assigned To</th><th>Priority</th><th>Status</th><th>Due Date</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Database Design</strong></td>
+                                <td>E-Commerce Platform</td>
+                                <td>Mike Johnson</td>
+                                <td><span class="status-badge status-active">High</span></td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>2026-03-01</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>API Integration</strong></td>
+                                <td>Mobile App Development</td>
+                                <td>John Doe</td>
+                                <td><span class="status-badge status-active">High</span></td>
+                                <td><span class="status-badge status-active">In Progress</span></td>
+                                <td>2026-03-25</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>UI Testing</strong></td>
+                                <td>Website Redesign</td>
+                                <td>Sarah Miller</td>
+                                <td><span class="status-badge status-pending">Medium</span></td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>2026-03-05</td>
+                                <td><button class="btn btn-orange btn-small">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- REPORTS SECTION -->
+            <div id="reports" class="content-section">
+                <div class="header">
+                    <h1>Reports</h1>
+                    <button class="btn btn-primary">+ Generate Report</button>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Performance Metrics</span></div>
+                    <div class="grid-2">
+                        <div>
+                            <h3 style="margin-bottom: 15px; color: var(--primary-blue);">Project Completion Rate</h3>
+                            <div class="progress-bar" style="height: 20px; margin-bottom: 10px;"><div class="progress-fill" style="width: 70%"></div></div>
+                            <p style="font-size: 14px;">70% of projects completed on time</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 15px; color: var(--primary-blue);">Client Satisfaction</h3>
+                            <div class="progress-bar" style="height: 20px; margin-bottom: 10px;"><div class="progress-fill" style="width: 92%"></div></div>
+                            <p style="font-size: 14px;">92% average satisfaction score</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 15px; color: var(--primary-blue);">Team Productivity</h3>
+                            <div class="progress-bar" style="height: 20px; margin-bottom: 10px;"><div class="progress-fill" style="width: 85%"></div></div>
+                            <p style="font-size: 14px;">85% tasks completed within deadline</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 15px; color: var(--primary-blue);">Budget Efficiency</h3>
+                            <div class="progress-bar" style="height: 20px; margin-bottom: 10px;"><div class="progress-fill" style="width: 78%"></div></div>
+                            <p style="font-size: 14px;">78% within budget allocation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Recent Reports</span></div>
+                    <table>
+                        <thead>
+                            <tr><th>Report Name</th><th>Type</th><th>Generated By</th><th>Date</th><th>Status</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Monthly Performance Report</strong></td>
+                                <td>Performance</td>
+                                <td>Admin</td>
+                                <td>2026-03-20</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td><button class="btn btn-orange btn-small">Download</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Financial Summary Q1</strong></td>
+                                <td>Financial</td>
+                                <td>Admin</td>
+                                <td>2026-03-15</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td><button class="btn btn-orange btn-small">Download</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SETTINGS SECTION -->
+            <div id="settings" class="content-section">
+                <div class="header">
+                    <h1>Settings</h1>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>General Settings</span></div>
+                    <div class="grid-2">
+                        <div>
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <input type="text" value="The Dime Technology" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" value="admin@thedime.com" />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" value="+1 (555) 123-4567" />
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" value="123 Business St, City, State 12345" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Notification Settings</span></div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" checked /> Email notifications for new projects
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" checked /> SMS alerts for urgent tasks
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" /> Daily summary reports
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" checked /> Payment notifications
+                        </label>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Security Settings</span></div>
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" placeholder="Enter current password" />
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" placeholder="Enter new password" />
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" placeholder="Confirm new password" />
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Update Password</button>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><span>Danger Zone</span></div>
+                    <button class="btn" style="background: var(--danger-red); color: white;">Delete Account</button>
+                </div>
             </div>
         </main>
     </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to corresponding nav link
+            event.target.closest('.nav-link').classList.add('active');
+        }
+    </script>
 </body>
 </html>
