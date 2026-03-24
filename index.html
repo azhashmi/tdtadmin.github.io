@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dime Technology - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0066cc;
+            --accent-orange: #ff6b35;
+            --dark-bg: #1a1a2e;
+            --light-bg: #f5f5f5;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --success-green: #27ae60;
+            --warning-yellow: #f39c12;
+            --danger-red: #e74c3c;
+            --border-color: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #004499 100%);
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-orange);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 15px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: rgba(255, 107, 53, 0.3);
+            border-left: 4px solid var(--accent-orange);
+            padding-left: 11px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: var(--primary-blue);
+            font-size: 28px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 5px solid;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .stat-card.primary {
+            border-left-color: var(--primary-blue);
+        }
+
+        .stat-card.success {
+            border-left-color: var(--success-green);
+        }
+
+        .stat-card.warning {
+            border-left-color: var(--warning-yellow);
+        }
+
+        .stat-card.danger {
+            border-left-color: var(--danger-red);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: var(--success-green);
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0052a3;
+        }
+
+        .btn-orange {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .btn-orange:hover {
+            background: #e55a25;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        thead {
+            background: var(--light-bg);
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            color: var(--text-dark);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tbody tr:hover {
+            background: var(--light-bg);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: var(--success-green);
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: var(--warning-yellow);
+        }
+
+        .status-completed {
+            background: #cfe2ff;
+            color: var(--primary-blue);
+        }
+
+        .progress-bar {
+            background: var(--light-bg);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-orange));
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .team-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .team-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-orange));
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .team-name {
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            color: var(--text-light);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 180px;
+            }
+            .main-content {
+                margin-left: 180px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🕐</div>
+                <span>The Dime</span>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#dashboard" class="nav-link active"><span>📊</span> Dashboard</a></li>
+                    <li class="nav-item"><a href="#projects" class="nav-link"><span>📋</span> Projects</a></li>
+                    <li class="nav-item"><a href="#clients" class="nav-link"><span>👥</span> Clients</a></li>
+                    <li class="nav-item"><a href="#team" class="nav-link"><span>👨‍💼</span> Team</a></li>
+                    <li class="nav-item"><a href="#earnings" class="nav-link"><span>💰</span> Earnings</a></li>
+                    <li class="nav-item"><a href="#tasks" class="nav-link"><span>✓</span> Tasks</a></li>
+                    <li class="nav-item"><a href="#reports" class="nav-link"><span>📈</span> Reports</a></li>
+                    <li class="nav-item"><a href="#settings" class="nav-link"><span>⚙️</span> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <div class="user-profile">
+                    <div><div style="font-weight: 600;">Admin</div><div style="font-size: 12px; color: var(--text-light);">Administrator</div></div>
+                    <div class="avatar">A</div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card primary">
+                    <div class="stat-label">Active Projects</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-change">↑ 3 this month</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-label">Completed Projects</div>
+                    <div class="stat-value">28</div>
+                    <div class="stat-change">↑ 5 this month</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-label">Total Clients</div>
+                    <div class="stat-value">15</div>
+                    <div class="stat-change">↑ 2 new clients</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-label">Monthly Earnings</div>
+                    <div class="stat-value">$24.5K</div>
+                    <div class="stat-change">↑ 12% from last month</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>Recent Projects</span>
+                    <button class="btn btn-primary btn-small">+ New Project</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>Project Name</th><th>Client</th><th>Progress</th><th>Status</th><th>Deadline</th><th>Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>E-Commerce Platform</strong></td>
+                            <td>TechStart Inc</td>
+                            <td><div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>75%</td>
+                            <td><span class="status-badge status-active">In Progress</span></td>
+                            <td>2026-04-15</td>
+                            <td><button class="btn btn-orange btn-small">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mobile App Development</strong></td>
+                            <td>FinanceHub Ltd</td>
+                            <td><div class="progress-bar"><div class="progress-fill" style="width: 45%"></div></div>45%</td>
+                            <td><span class="status-badge status-active">In Progress</span></td>
+                            <td>2026-05-20</td>
+                            <td><button class="btn btn-orange btn-small">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Website Redesign</strong></td>
+                            <td>StyleBox Co</td>
+                            <td><div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>100%</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                            <td>2026-03-10</td>
+                            <td><button class="btn btn-orange btn-small">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>Team Members</span>
+                    <button class="btn btn-primary btn-small">+ Add Member</button>
+                </div>
+                <div class="team-grid">
+                    <div class="team-card"><div class="team-avatar">JD</div><div class="team-name">John Doe</div><div class="team-role">Lead Developer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                    <div class="team-card"><div class="team-avatar">SM</div><div class="team-name">Sarah Miller</div><div class="team-role">UI/UX Designer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                    <div class="team-card"><div class="team-avatar">MJ</div><div class="team-name">Mike Johnson</div><div class="team-role">Backend Developer</div><div style="color: var(--success-green); font-size: 12px; margin-top: 10px;">● Active</div></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title"><span>Monthly Earnings Breakdown</span></div>
+                <table>
+                    <thead>
+                        <tr><th>Project</th><th>Client</th><th>Amount</th><th>Status</th><th>Date</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>E-Commerce Platform</td><td>TechStart Inc</td><td><strong style="color: var(--success-green);">$8,500</strong></td><td><span class="status-badge status-active">Paid</span></td><td>2026-03-15</td></tr>
+                        <tr><td>Mobile App Development</td><td>FinanceHub Ltd</td><td><strong style="color: var(--warning-yellow);">$7,200</strong></td><td><span class="status-badge status-pending">Pending</span></td><td>2026-03-20</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
