@@ -497,6 +497,57 @@
                 </div>
             </div>
 
+            <!-- NEW PROJECT MODAL WITH CONFIRMATION -->
+<div id="newProjectModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeNewProjectModal()">&times;</span>
+        <h2>Add New Project</h2>
+        <form class="modal-form" id="projectForm">
+            <div class="form-group">
+                <label for="projectName">Project Name *</label>
+                <input type="text" id="projectName" placeholder="Enter project name" required />
+            </div>
+            <div class="form-group">
+                <label for="projectClient">Client *</label>
+                <select id="projectClient" required>
+                    <option value="">Select a client</option>
+                    <option value="TechStart Inc">TechStart Inc</option>
+                    <option value="FinanceHub Ltd">FinanceHub Ltd</option>
+                    <option value="StyleBox Co">StyleBox Co</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="projectBudget">Budget ($) *</label>
+                <input type="number" id="projectBudget" placeholder="Enter budget" min="0" required />
+            </div>
+            <div class="form-group">
+                <label for="projectDeadline">Deadline *</label>
+                <input type="date" id="projectDeadline" required />
+            </div>
+            <div class="form-group">
+                <label for="projectDescription">Description</label>
+                <textarea id="projectDescription" placeholder="Enter project description"></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="btn btn-cancel" onclick="closeNewProjectModal()">Cancel</button>
+                <button type="button" class="btn btn-add" onclick="confirmAddProject()">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <h2>Confirm</h2>
+        <p id="confirmMessage">Are you sure you want to add this project?</p>
+        <div class="modal-buttons">
+            <button type="button" class="btn btn-cancel" onclick="closeConfirmationModal()">No</button>
+            <button type="button" class="btn btn-add" onclick="finalizeAddProject()">Yes</button>
+        </div>
+    </div>
+</div>
+
             <!-- PROJECTS SECTION -->
             <div id="projects" class="content-section">
                 <div class="header">
